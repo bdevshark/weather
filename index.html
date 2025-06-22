@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather - Get all weather details</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body>
+    <div class="card">
+        <div class="search">
+            <input type="text" placeholder="Enter city name" id="cityInput" tabindex="1">
+            <button id="searchButton"><img src="images/search.png" alt="search"></button>
+        </div>
+        <div class="error">Name is not valid</div>
+    
+        <div class="weather">
+            <img src="images/clouds.png" alt="weather icon" class="weather-icon">
+            <h1>21°c</h1>
+            <h2>New York</h2>
+            <div class="details">
+                <div class="col">
+                    <img src="images/humidity.png" alt="humidity icon">
+                    <div>
+                        <p class="humidity">50%</p>
+                        <p>Humidity</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="images/wind.png" alt="wind icon">
+                    <div>
+                        <p class="wind">15 km/h</p>
+                        <p>Wind Speed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // http://api.weatherapi.com/v1/current.json?key=cd053ddccc0a4277b12192116252006&q=kolkata
+        const API_URL = 'http://api.weatherapi.com/v1/current.json?';
+        const API_KEY = 'cd053ddccc0a4277b12192116252006';
+        document.querySelector("#searchButton").addEventListener("click", function(){
+            const cityName = document.querySelector("#cityInput").value;
+            console.log(cityName);
+            checkWeather(cityName);
+        })
+        
+        async function checkWeather(city) {
+            const response = await fetch(API_URL + `&key=${API_KEY}&q=${city}`);
+            var data = await response.json();
+            if (response.status == 200){
+                console.log(data);
+                document.querySelector(".error").style.display = 'none';
+                document.querySelector(".weather").style.display = 'block';
+                document.querySelector(".weather-icon").src = data.current.condition.icon;
+                document.querySelector(".weather h1").innerHTML = Math.round(data.current.temp_c) + "°c";
+                document.querySelector(".weather h2").innerHTML = data.location.name;
+                document.querySelector(".humidity").innerHTML = data.current.humidity + '%';
+                document.querySelector(".wind").innerHTML = Math.round(data.current.wind_kph) + ' km/h';
+
+            } else {
+                document.querySelector(".error").style.display = 'block';
+                document.querySelector(".weather").style.display = 'none';
+            }
+        };
+        
+    </script>
+    
+</body>
+</html>
