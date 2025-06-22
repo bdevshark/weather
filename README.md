@@ -8,7 +8,7 @@ git add .
 
 git commit -m "your message"
 
-git remote add origin https://github.com/bdevshark/<repo name>
+git remote add origin https://github.com/bdevshark/repo-name
 
 git branch --set-upstream-to=origin/main
 
