@@ -10,9 +10,9 @@ git commit -m "your message"
 
 git remote add origin https://github.com/bdevshark/repo-name
 
-git branch --set-upstream-to=origin/main
-
 git config pull.rebase true
+
+git branch --set-upstream-to=origin/main
 
 git pull
 
